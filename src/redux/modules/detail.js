@@ -1,17 +1,44 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {getPost} from "../../api/getApi";
 
 // 초기 상태값
 const initialState = {
-    number: 0,
+    listData: [],
+    listHeader: {},
+    loading: false
 };
 
-const counterSlice = createSlice({
-    name: 'counter',
+const detailSlice = createSlice({
+    name: 'detail',
     initialState: initialState,
     reducers: {
-        increment(state){state.number++}
+        loadingStart(state){
+            state.loading = true
+        },
+        getListData(state, action){
+            state.listData = action.payload.data
+            state.listHeader = action.payload.headers
+            state.loading = false
+        },
+        loadingFail(state){
+            state.loading = false
+        }
     }
 })
 
-export const counterActions = counterSlice.actions
-export default counterSlice.reducer
+export const detailActions = detailSlice.actions
+
+export const fetchListData = () => async (dispatch) => {
+        dispatch(detailActions.loadingStart())
+    try {
+        const response = await getPost()
+        dispatch(detailActions.getListData({data: response.data, headers: response.headers}))
+    }catch (error){
+            console.log(error,'에러뜸')
+        dispatch(detailActions.loadingFail())
+    }
+}
+
+
+
+export default detailSlice.reducer

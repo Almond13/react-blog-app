@@ -1,10 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit";
 // import {counterActions} from "../modules/detail";
-import counterReducer from "../modules/detail"
+import detailReducer from "../modules/detail"
 
 const store = configureStore({
     reducer: {
-        counter: counterReducer
+        detail: detailReducer
     }
 })
 

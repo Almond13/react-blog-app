@@ -2,48 +2,42 @@ import React, { useEffect, useState } from "react"
 import {useParams} from "react-router-dom";
 import {getPost} from "../api/getApi";
 import {useDispatch, useSelector} from "react-redux";
-import {counterActions} from "../redux/modules/detail";
+import {detailActions, fetchListData} from "../redux/modules/detail";
 
 
 const List = () => {
     const params = useParams()
     const dispatch = useDispatch()
 
-    const [data, setData] = useState([])
-    const [header, setHeader] = useState({})
-    const [loading, setLoading] = useState(false)
-
-    const number = useSelector((state) => state.counter.number)
-    const handleIncrement = () => {
-        dispatch(counterActions.increment())
-    }
+    const listData = useSelector((state) => state.detail.listData)
+    const listHeader = useSelector((state) => state.detail.listHeader)
+    const loading = useSelector((state) => state.detail.loading)
+    // const getListData =  () => {
+    //      dispatch(detailActions.getListData())
+    //     // console.log(listData)
+    // }
 
     useEffect(() => {
-        setLoading(true)
-        getPost().then((res) => {
-            if (res.data.length > 0) {
-                setData(res.data)
-                setHeader(res.headers)
-            }
-            setLoading(false)
-        });
-        console.log(data)
-        console.log(params)
-    }, [])
+        dispatch(fetchListData())
+        // console.log(data)
+        // console.log(params)
+        console.log(listData)
+    }, [dispatch])
 
     if (loading) {
         return <p>대기중</p>
     }
 
-    if (data.length === 0) {
+    if (listData.length === 0) {
         return null
     }
 
     return (
         <>
             <h1>어바웃</h1>
-            <p>첫 번째 데이터의 ID: {data[0].id}</p>
-            <button onClick={handleIncrement}>{number}</button>
+            <p>첫 번째 데이터의 ID: {listData[0].id}</p>
+            <pre>{JSON.stringify(listHeader, null, 2)}</pre>
+            <button onClick={() => dispatch(fetchListData())}>데이터 다시 불러오기</button>
         </>
     );
 };
