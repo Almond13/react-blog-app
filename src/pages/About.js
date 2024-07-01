@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
-import axios from "axios"
 import {Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
-import {detailActions, fetchAboutData} from "../redux/modules/detail"
+import {fetchAboutData} from "../redux/modules/detail"
 
 const About = () => {
     const params = useParams()
@@ -11,7 +10,6 @@ const About = () => {
 
     const aboutData = useSelector((state) => state.detail.aboutData)
     const aboutHeader = useSelector((state) => state.detail.aboutHeader)
-    // const loading = useSelector((state) => state.detail.loading)
 
     useEffect(() => {
         setLoading(true)

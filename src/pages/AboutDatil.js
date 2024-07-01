@@ -9,9 +9,10 @@ const Detail = () => {
     const [loading, setLoading] = useState(false)
 
     const detailData = useSelector(state => state.detail.detailData)
-    // const loading = useSelector((state) => state.detail.loading)
+    const detailDate = useSelector(state => state.detail.detailDate)
 
-    useEffect(()=> {
+
+    useEffect( ()=> {
         setLoading(true)
         dispatch(fetchDetailData(params.id))
         setLoading(false)
@@ -27,8 +28,9 @@ const Detail = () => {
 
     return (
         <>
-            <h1>디테일</h1>
-            {detailData.id}
+            <h1>{detailData.title.rendered}</h1>
+            <div>{detailDate}</div>
+            <div dangerouslySetInnerHTML={{__html: detailData.content.rendered}}></div>
         </>
     )
 }
