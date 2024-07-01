@@ -8,20 +8,14 @@ const List = () => {
     const aboutData = useSelector((state) => state.detail.aboutData)
     const aboutHeader = useSelector((state) => state.detail.aboutHeader)
 
-    const AboutList = () => {
-       return  aboutData.map((item) => (
-           <Link to="/" key={item.id}>
-               {item.id} / {item.title.rendered}
-           </Link>
-       ))
-    }
-
+    useEffect(()=> {
+    })
     return (
         <>
             <h1>어바웃</h1>
             {aboutData.map((item) => (
                 <div key={item.id}>
-                    <Link to={`/about/${item.id}`} >
+                    <Link to={`/about/post/${item.id}`} >
                         {item.id} / {item.title.rendered}
                     </Link>
                 </div>
