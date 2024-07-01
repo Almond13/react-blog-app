@@ -2,8 +2,8 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {getPost} from "../../api/getApi";
 
 const initialState = {
-    listData: [],
-    listHeader: {},
+    aboutData: [],
+    aboutHeader: {},
     loading: false,
 };
 
@@ -14,9 +14,9 @@ const detailSlice = createSlice({
         loadingStart(state) {
             state.loading = true
         },
-        getListData(state, action) {
-            state.listData = action.payload.data
-            state.listHeader = { ...action.payload.headers }
+        getAboutData(state, action) {
+            state.aboutData = action.payload.data
+            state.aboutHeader = { ...action.payload.headers }
             state.loading = false
         },
         loadingFail(state) {
@@ -27,11 +27,11 @@ const detailSlice = createSlice({
 
 export const detailActions = detailSlice.actions
 
-export const fetchListData = () => async (dispatch) => {
+export const fetchAboutData = () => async (dispatch) => {
     dispatch(detailActions.loadingStart())
     try {
         const response = await getPost()
-        dispatch(detailActions.getListData({ data: response.data, headers: { ...response.headers } }))
+        dispatch(detailActions.getAboutData({ data: response.data, headers: { ...response.headers } }))
     } catch (error) {
         console.log(error, '에러뜸')
         dispatch(detailActions.loadingFail())

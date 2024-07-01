@@ -1,5 +1,4 @@
-import {configureStore} from "@reduxjs/toolkit";
-// import {counterActions} from "../modules/detail";
+import {configureStore} from "@reduxjs/toolkit"
 import detailReducer from "../modules/detail"
 
 const store = configureStore({

@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from "react"
-import {useParams} from "react-router-dom"
-import {getPost} from "../api/getApi"
-import {useDispatch, useSelector} from "react-redux"
-import {detailActions, fetchListData} from "../redux/modules/detail"
+import {useParams, Link} from "react-router-dom"
+import {useSelector} from "react-redux"
 
 const List = () => {
     const params = useParams()
-    const dispatch = useDispatch()
 
-    const listData = useSelector((state) => state.detail.listData)
-    const listHeader = useSelector((state) => state.detail.listHeader)
-    const loading = useSelector((state) => state.detail.loading)
+    const aboutData = useSelector((state) => state.detail.aboutData)
+    const aboutHeader = useSelector((state) => state.detail.aboutHeader)
 
-    useEffect(() => {
-        dispatch(fetchListData())
-    }, [dispatch])
-
-    if (loading) {
-        return <p>대기중</p>
-    }
-
-    if (listData.length === 0) {
-        return null
+    const AboutList = () => {
+       return  aboutData.map((item) => (
+           <Link to="/" key={item.id}>
+               {item.id} / {item.title.rendered}
+           </Link>
+       ))
     }
 
     return (
         <>
             <h1>어바웃</h1>
-            <p>첫 번째 데이터의 ID: {listData[0].id}</p>
-            <pre>{JSON.stringify(listHeader, null, 2)}</pre>
+            {aboutData.map((item) => (
+                <div key={item.id}>
+                    <Link to={`/about/${item.id}`} >
+                        {item.id} / {item.title.rendered}
+                    </Link>
+                </div>
+            ))}
+            <pre>{JSON.stringify(aboutHeader, null, 2)}</pre>
         </>
     )
 }
