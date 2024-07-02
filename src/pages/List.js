@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {useParams, Link} from "react-router-dom"
 import {useSelector} from "react-redux"
+import Pagination from "../components/Pagination";
 
 const List = () => {
     const params = useParams()
@@ -20,7 +21,7 @@ const List = () => {
                     </Link>
                 </div>
             ))}
-            <pre>{JSON.stringify(aboutHeader, null, 2)}</pre>
+            <Pagination />
         </>
     )
 }

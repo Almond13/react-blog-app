@@ -2,3 +2,6 @@
     padding: 10px;
 }
 
+.pagination > a{
+    padding: 5px;
+}

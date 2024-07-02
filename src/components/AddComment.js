@@ -21,12 +21,15 @@ const AddComment = () => {
     return (
         <>
             <h2>코멘트 추가</h2>
+            <p>이름</p>
             <input value={name} onChange={(e) => {
                 setName(e.target.value)
             }}/>
+            <p>이메일</p>
             <input value={email} onChange={(e) => {
                 setEmail(e.target.value)
             }}/>
+            <p>내용</p>
             <input value={content} onChange={(e) => {
                 setContent(e.target.value)
             }}/>

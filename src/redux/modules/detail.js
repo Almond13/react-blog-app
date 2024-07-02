@@ -5,7 +5,8 @@ const initialState = {
     aboutData: [],
     aboutHeader: {},
     detailData: [],
-    postId : 0
+    postId : 0,
+    currentPage: 0
 }
 
 const detailSlice = createSlice({
@@ -15,6 +16,7 @@ const detailSlice = createSlice({
         getAboutData(state, action) {
             state.aboutData = action.payload.data
             state.aboutHeader = { ...action.payload.headers }
+            state.currentPage = action.payload.current
         },
         getDetailData(state, action){
             state.detailData = action.payload.data
@@ -28,7 +30,7 @@ export const detailActions = detailSlice.actions
 export const fetchAboutData = (page) => async (dispatch) => {
     try {
         const response = await getPost(page)
-        dispatch(detailActions.getAboutData({ data: response.data, headers: { ...response.headers } }))
+        dispatch(detailActions.getAboutData({ data: response.data, headers: { ...response.headers }, current: page }))
     } catch (error) {
         console.log(error, '에러 발생')
     }

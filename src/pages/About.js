@@ -15,7 +15,7 @@ const About = () => {
         setLoading(true)
         dispatch(fetchAboutData(params.page))
         setLoading(false)
-    }, [dispatch])
+    }, [dispatch, params.page])
 
     if (loading) {
         return <p>대기중</p>
