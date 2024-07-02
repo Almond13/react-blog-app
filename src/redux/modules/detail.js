@@ -34,7 +34,7 @@ export const fetchAboutData = (page) => async (dispatch) => {
         const response = await getPost(page)
         dispatch(detailActions.getAboutData({ data: response.data, headers: { ...response.headers } }))
     } catch (error) {
-        console.log(error, '에러뜸')
+        console.log(error, '에러 발생')
     }
 }
 
@@ -44,7 +44,7 @@ export const fetchDetailData = (id) => async (dispatch) => {
         dispatch(detailActions.getDetailData({ data: response.data}))
         dispatch(detailActions.setDetailDate({data:response.data.date}))
     } catch (error) {
-        console.log(error, '에러뜸')
+        console.log(error, '에러 발생')
     }
 }
 

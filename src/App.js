@@ -8,7 +8,7 @@ import Detail from "./pages/AboutDatil";
 function App() {
   return (
     <div className="App">
-        <Link to="/about">about</Link>
+        <Link to="/about/1">about</Link>
       <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/about" element={<About/>}>

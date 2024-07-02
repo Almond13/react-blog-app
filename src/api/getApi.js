@@ -21,3 +21,18 @@ export const getDetail = async (detailId) => {
         console.log(error)
     }
 }
+
+export const getComment = async (postId) => {
+    try {
+        return await axios.get(`${api}/comments`,{
+            params: {
+                post: postId,
+                order: 'asc',
+                orderby: 'date',
+                per_page: 100
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

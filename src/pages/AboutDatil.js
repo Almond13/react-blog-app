@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import {useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {fetchDetailData} from "../redux/modules/detail";
+import CommentWrap from "../components/CommentWrap";
+import {fetchCommentData} from "../redux/modules/comment";
 
 const Detail = () => {
     const params = useParams()
@@ -9,7 +11,8 @@ const Detail = () => {
     const [loading, setLoading] = useState(false)
 
     const detailData = useSelector(state => state.detail.detailData)
-    const detailDate = useSelector(state => state.detail.detailDate)
+    const commentData = useSelector(state => state.comment.commentData)
+    // const detailDate = useSelector(state => state.detail.detailDate)
 
 
     useEffect( ()=> {
@@ -18,19 +21,27 @@ const Detail = () => {
         setLoading(false)
     },[dispatch])
 
+    const detailDate = () => {
+        const dateObj = new Date(detailData.date)
+        const options = {year: 'numeric', month: 'long', day: '2-digit'}
+        return dateObj.toLocaleDateString('en-US', options)
+    }
+
     if (loading) {
         return <p>대기중</p>
     }
 
-    if (detailData.length === 0) {
+    if (detailData.length === 0 && commentData.length === 0) {
         return null
     }
 
     return (
         <>
             <h1>{detailData.title.rendered}</h1>
-            <div>{detailDate}</div>
+            {/*<div>{detailDate}</div>*/}
+            {detailDate()}
             <div dangerouslySetInnerHTML={{__html: detailData.content.rendered}}></div>
+            <CommentWrap/>
         </>
     )
 }
