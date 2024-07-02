@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {getComment} from "../../api/getApi";
-import {detailActions} from "./detail";
 
 const initialState = {
     commentData: [],

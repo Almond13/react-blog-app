@@ -22,7 +22,7 @@ const CommentList = (props) => {
                 .filter(v=> v.parent === props.parent)
                 .map((item) => (
                 <div key={item.id} style={{margin: '10px', border: '1px solid gray'}}>
-                    {item.id} {item.author_name} {commentDate(item.date)} {item.parent}
+                    {item.id} {item.author_name} {commentDate(item.date)} 부모: {item.parent}
                     <div dangerouslySetInnerHTML={{__html: item.content.rendered}}></div>
                     <CommentList parent={item.id} />
                 </div>

@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {fetchCommentData} from "../redux/modules/comment";
 import CommentList from "./Comments";
+import AddComment from "./AddComment";
 
 const CommentWrap = () => {
     const params = useParams()
@@ -10,10 +11,11 @@ const CommentWrap = () => {
     const [loading, setLoading] = useState(false)
 
     const commentData = useSelector(state => state.comment.commentData)
+    const postId = useSelector(state => state.detail.postId)
 
     useEffect( ()=> {
         setLoading(true)
-        dispatch(fetchCommentData(params.id))
+        dispatch(fetchCommentData(postId))
         setLoading(false)
     },[dispatch])
 
@@ -27,8 +29,9 @@ const CommentWrap = () => {
 
     return (
         <>
-            <h1>코멘트</h1>
+            <h2>코멘트</h2>
             <CommentList parent={0}/>
+            <AddComment/>
         </>
     )
 }

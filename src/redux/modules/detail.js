@@ -5,8 +5,8 @@ const initialState = {
     aboutData: [],
     aboutHeader: {},
     detailData: [],
-    detailDate: ''
-};
+    postId : 0
+}
 
 const detailSlice = createSlice({
     name: 'detail',
@@ -18,12 +18,8 @@ const detailSlice = createSlice({
         },
         getDetailData(state, action){
             state.detailData = action.payload.data
+            state.postId = action.payload.data.id
         },
-        setDetailDate(state,action){
-            const dateObj = new Date(action.payload.data)
-            const options = {year: 'numeric', month: 'long', day: '2-digit'}
-            state.detailDate = dateObj.toLocaleDateString('en-US', options)
-        }
     }
 })
 
@@ -42,7 +38,6 @@ export const fetchDetailData = (id) => async (dispatch) => {
     try {
         const response = await getDetail(id)
         dispatch(detailActions.getDetailData({ data: response.data}))
-        dispatch(detailActions.setDetailDate({data:response.data.date}))
     } catch (error) {
         console.log(error, '에러 발생')
     }

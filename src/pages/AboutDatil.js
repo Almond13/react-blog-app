@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {fetchDetailData} from "../redux/modules/detail";
 import CommentWrap from "../components/CommentWrap";
-import {fetchCommentData} from "../redux/modules/comment";
 
 const Detail = () => {
     const params = useParams()
@@ -12,8 +11,6 @@ const Detail = () => {
 
     const detailData = useSelector(state => state.detail.detailData)
     const commentData = useSelector(state => state.comment.commentData)
-    // const detailDate = useSelector(state => state.detail.detailDate)
-
 
     useEffect( ()=> {
         setLoading(true)
@@ -38,7 +35,6 @@ const Detail = () => {
     return (
         <>
             <h1>{detailData.title.rendered}</h1>
-            {/*<div>{detailDate}</div>*/}
             {detailDate()}
             <div dangerouslySetInnerHTML={{__html: detailData.content.rendered}}></div>
             <CommentWrap/>
