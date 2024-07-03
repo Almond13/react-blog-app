@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
-import {fetchAboutData, resetAbout} from "../redux/modules/detail"
+import {fetchAboutData} from "../redux/modules/detail"
 
 const About = () => {
     const params = useParams()
@@ -17,12 +17,6 @@ const About = () => {
         dispatch(fetchAboutData(params.page))
         setLoading(false)
     }, [dispatch, params.page])
-
-    // useEffect(() => {
-    //     return () => {
-    //         dispatch(resetAbout())
-    //     }
-    // }, []);
 
     if (loading) {
         return <p>대기중</p>

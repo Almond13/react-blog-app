@@ -25,7 +25,7 @@ const CommentWrap = () => {
     }
 
     if (commentData.length === 0) {
-        return null
+        return <p>댓글이 없습니다.</p>
     }
 
     return (

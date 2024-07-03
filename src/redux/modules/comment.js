@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {getComment} from "../../api/getApi";
+import {detailActions} from "./detail";
 
 const initialState = {
     commentData: [],
@@ -18,6 +19,12 @@ const commentSlice = createSlice({
         setEachData(state, action){
             state.edit[action.payload.editId] = false
             state.reply[action.payload.editId] = false
+        },
+        resetCommentData(state) {
+            state.commentData = initialState.commentData
+            state.typeIndex = initialState.typeIndex
+            state.edit = initialState.edit
+            state.reply = initialState.reply
         }
     }
 })
