@@ -1,23 +1,18 @@
 import {Link} from "react-router-dom";
-import React, {useEffect} from "react";
+import React from "react";
 import {useSelector} from "react-redux";
 
 const Pagination = () => {
     const totalPage = Number(useSelector((state) => state.detail.aboutHeader['x-wp-totalpages']))
     const currentPage = Number(useSelector((state) => state.detail.currentPage))
 
-
     const pageGroup = () => {
         const startPage = Math.floor((currentPage - 1) / 5) * 5 + 1
         const endPage = Math.min(startPage + 4, totalPage)
         return { startPage, endPage }
     }
-
     const paging = Array.from({ length: pageGroup().endPage }, (_, index) => index + 1);
 
-    useEffect(() => {
-        console.log(paging)
-    }, []);
     return (
         <div className="pagination">
             <Link to="/about/1">처음으로</Link>

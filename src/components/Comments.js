@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react"
-import {Link, useParams} from "react-router-dom"
+import React, { useEffect } from "react"
 import {useDispatch, useSelector} from "react-redux"
+import {eachCommentData} from "../redux/modules/comment";
+import AddComment from "./AddComment";
 
 const CommentList = (props) => {
-    const params = useParams()
     const dispatch = useDispatch()
 
     const commentData = useSelector(state => state.comment.commentData)
+    const storeEdit = useSelector(state => state.comment.edit)
+    const storeReply = useSelector(state => state.comment.reply)
 
     useEffect( ()=> {
-    },[])
+        commentData.forEach(item => {
+            if(storeEdit[item.id] === undefined || storeReply[item.id] === undefined){
+                dispatch(eachCommentData(item.id))
+            }
+        })
+    },[storeEdit, storeReply, dispatch])
 
     const commentDate = (date) => {
         const [yy, mm, dd] = [date.slice(0,4),date.slice(5,7),date.slice(8,10)]
@@ -25,6 +32,10 @@ const CommentList = (props) => {
                     {item.id} {item.author_name} {commentDate(item.date)} 부모: {item.parent}
                     <div dangerouslySetInnerHTML={{__html: item.content.rendered}}></div>
                     <CommentList parent={item.id} />
+                    <button>수정</button>
+                    <button>대댓글</button>
+                    <button>삭제</button>
+                    {storeEdit[item.id] && <AddComment/>}
                 </div>
             ))}
         </>

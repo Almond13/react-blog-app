@@ -12,6 +12,7 @@ const CommentWrap = () => {
 
     const commentData = useSelector(state => state.comment.commentData)
     const postId = useSelector(state => state.detail.postId)
+    const type = useSelector(state => state.comment.typeIndex)
 
     useEffect( ()=> {
         setLoading(true)
@@ -31,7 +32,10 @@ const CommentWrap = () => {
         <>
             <h2>코멘트</h2>
             <CommentList parent={0}/>
-            <AddComment/>
+            {type > 0 &&
+                <AddComment isEdit={false}/>
+            }
+
         </>
     )
 }

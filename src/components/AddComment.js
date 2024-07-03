@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {postComment} from "../api/postApi";
 
-const AddComment = () => {
+const AddComment = (props) => {
     const params = useParams()
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
@@ -20,7 +20,7 @@ const AddComment = () => {
 
     return (
         <>
-            <h2>코멘트 추가</h2>
+            <h2>{props.isEdit? '코멘트 수정' : '코멘트 추가'}</h2>
             <p>이름</p>
             <input value={name} onChange={(e) => {
                 setName(e.target.value)
@@ -33,7 +33,7 @@ const AddComment = () => {
             <input value={content} onChange={(e) => {
                 setContent(e.target.value)
             }}/>
-            <button onClick={() => postComment({postId, name, email, content})}>추가</button>
+            <button onClick={() => postComment({postId, name, email, content})}>{props.isEdit? '수정' : '추가'}</button>
         </>
     )
 }

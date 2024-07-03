@@ -22,6 +22,15 @@ const detailSlice = createSlice({
             state.detailData = action.payload.data
             state.postId = action.payload.data.id
         },
+        resetAboutData(state) {
+            // state.aboutData = action.payload.data
+            // state.aboutHeader = {...action.payload.headers}
+            state.aboutData = initialState.aboutData
+            state.aboutHeader = initialState.aboutHeader
+        },
+        resetDetailData(state) {
+            state.detailData = initialState.detailData
+        }
     }
 })
 
@@ -45,4 +54,12 @@ export const fetchDetailData = (id) => async (dispatch) => {
     }
 }
 
+export const resetAbout = () => async (dispatch) => {
+    // dispatch(detailActions.resetAboutData({data: initialState.aboutData, headers: { ...initialState.aboutHeader }}))
+    dispatch(detailActions.resetAboutData())
+}
+
+export const resetDetail = () => async (dispatch) => {
+    dispatch(detailActions.resetAboutData())
+}
 export default detailSlice.reducer
