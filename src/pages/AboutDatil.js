@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
-import {fetchDetailData, resetAbout} from "../redux/modules/detail";
+import {fetchDetailData, resetAbout, resetDetail} from "../redux/modules/detail";
 import CommentWrap from "../components/CommentWrap";
 
 const Detail = () => {
@@ -24,6 +24,13 @@ const Detail = () => {
         }
         loadData().then()
     },[dispatch, params.id])
+
+
+    // useEffect(() => {
+    //     return () => {
+    //         dispatch(resetDetail())
+    //     }
+    // }, []);
 
     const detailDate = () => {
         const dateObj = new Date(detailData.date)

@@ -60,6 +60,6 @@ export const resetAbout = () => async (dispatch) => {
 }
 
 export const resetDetail = () => async (dispatch) => {
-    dispatch(detailActions.resetAboutData())
+    dispatch(detailActions.resetDetailData())
 }
 export default detailSlice.reducer
