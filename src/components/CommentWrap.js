@@ -33,7 +33,7 @@ const CommentWrap = () => {
             <h2>코멘트</h2>
             <CommentList parent={0}/>
             {type > 0 &&
-                <AddComment isEdit={false}/>
+                <AddComment/>
             }
 
         </>

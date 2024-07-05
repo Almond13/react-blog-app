@@ -1,6 +1,5 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit"
+import {createSlice} from "@reduxjs/toolkit"
 import {getPost, getDetail} from "../../api/getApi"
-import {useSelector} from "react-redux";
 import {commentActions} from "./comment";
 
 const initialState = {

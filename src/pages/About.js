@@ -22,7 +22,7 @@ const About = () => {
         return <p>대기중</p>
     }
 
-    if (aboutData.length < 0 && !(detailData.length < 0)) {
+    if (aboutData.length < 0) {
         return null
     }
 

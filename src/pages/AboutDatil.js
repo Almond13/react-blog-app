@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {fetchDetailData, resetDetail} from "../redux/modules/detail";
 import CommentWrap from "../components/CommentWrap";
-import {resetComment} from "../redux/modules/comment";
 
 const Detail = () => {
     const params = useParams()
@@ -25,7 +24,7 @@ const Detail = () => {
         return () => {
             dispatch(resetDetail())
         }
-    }, []);
+    }, [])
 
     const detailDate = () => {
         const dateObj = new Date(detailData.date)
@@ -37,7 +36,7 @@ const Detail = () => {
         return <p>대기중</p>
     }
 
-    if (detailData.length === 0 && commentData.length === 0) {
+    if (detailData.length === 0) {
         return null
     }
 
