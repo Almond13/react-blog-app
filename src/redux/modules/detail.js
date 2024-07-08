@@ -3,6 +3,7 @@ import {getPost, getDetail} from "../../api/getApi"
 import {commentActions} from "./comment";
 
 const initialState = {
+    loading: false,
     aboutData: [],
     aboutHeader: {},
     detailData: [],
@@ -14,6 +15,12 @@ const detailSlice = createSlice({
     name: 'detail',
     initialState: initialState,
     reducers: {
+        setLoading(state) {
+            state.loading = true
+        },
+        endLoading(state){
+            state.loading = false
+        },
         getAboutData(state, action) {
             state.aboutData = action.payload.data
             state.aboutHeader = { ...action.payload.headers }
@@ -27,7 +34,7 @@ const detailSlice = createSlice({
             state.detailData = initialState.detailData
             state.aboutData = initialState.aboutData
             state.aboutHeader = initialState.aboutData
-        }
+        },
     }
 })
 

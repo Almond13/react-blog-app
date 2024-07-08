@@ -1,7 +1,5 @@
 import axios from "axios";
-import {fetchCommentData} from "../redux/modules/comment";
 const api = process.env.REACT_APP_BLOG_API
-
 
 export const postComment = async (props) => {
     try {
@@ -17,14 +15,13 @@ export const postComment = async (props) => {
     }
 }
 
-export const updateComment = async (props) => {
+export const editComment = async (props) => {
     try {
-        return await axios.post(`${api}/comments`,{
+        return await axios.put(`${api}/comments/${props.commentId}`,{
             post: props.postId,
-            parent: 0 || props.commentId,
+            id : props.commentId,
             author_name: props.name,
-            content: props.content,
-            author_email: props.email
+            content: props.content
         })
     } catch (error) {
         console.log(error)

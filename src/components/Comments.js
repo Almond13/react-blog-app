@@ -9,7 +9,6 @@ const CommentList = (props) => {
     const commentData = useSelector(state => state.comment.commentData)
     const storeEdit = useSelector(state => state.comment.isEdit)
     const storeReply = useSelector(state => state.comment.isReply)
-    const type = useSelector(state => state.comment.typeIndex)
 
     useEffect( ()=> {
         commentData.forEach(item => {
@@ -17,7 +16,7 @@ const CommentList = (props) => {
                 dispatch(eachCommentData(item.id))
             }
         })
-    },[storeEdit, storeReply, dispatch])
+    },[commentData, storeEdit, storeReply, dispatch])
 
     const commentDate = (date) => {
         const [yy, mm, dd] = [date.slice(0,4),date.slice(5,7),date.slice(8,10)]
@@ -40,7 +39,6 @@ const CommentList = (props) => {
                 <div key={item.id} style={{margin: '10px', border: '1px solid gray'}}>
                     {item.id} {item.author_name} {commentDate(item.date)} 부모: {item.parent}
                     <div dangerouslySetInnerHTML={{__html: item.content.rendered}}></div>
-                    <CommentList parent={item.id} />
                     {!storeReply[item.id] ?
                         <button onClick={() => showEdit(item.id)}>{storeEdit[item.id] ? '취소' : '수정'}</button>
                         : null
@@ -55,6 +53,7 @@ const CommentList = (props) => {
                     {storeEdit[item.id] || storeReply[item.id] ? <AddComment commentId={item.id}/>
                         : null
                     }
+                    <CommentList parent={item.id} />
                 </div>
             ))}
         </>

@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit"
+import {createSlice} from "@reduxjs/toolkit"
 import {getComment} from "../../api/getApi";
 
 const initialState = {
@@ -77,9 +77,10 @@ export const showReplyBox = (id) => async (dispatch) => {
     }
 }
 
-export const resetBox = () => async (dispatch) => {
+export const refreshBox = (id) => async (dispatch) => {
     try {
-        dispatch(commentActions.resetCommentData())
+        await dispatch(commentActions.resetCommentData())
+        await dispatch(fetchCommentData(id))
     } catch (error) {
         console.log(error, '에러 발생')
     }
