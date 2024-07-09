@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {eachCommentData, showEditBox, showReplyBox} from "../redux/modules/comment";
 import AddComment from "./AddComment";
+import {deleteComment} from "../api/postApi";
 
 const CommentList = (props) => {
     const dispatch = useDispatch()
@@ -47,7 +48,8 @@ const CommentList = (props) => {
                         <button onClick={() => showReply(item.id)}>{storeReply[item.id] ? '취소' : '대댓글'}</button>
                         : null
                     }
-                    {!(storeEdit[item.id] || storeReply[item.id]) ? <button>삭제</button>
+                    {!(storeEdit[item.id] || storeReply[item.id]) ?
+                        <button onClick={() => deleteComment(item.id)}>삭제</button>
                         : null
                     }
                     {storeEdit[item.id] || storeReply[item.id] ? <AddComment commentId={item.id}/>

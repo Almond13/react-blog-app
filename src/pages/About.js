@@ -12,7 +12,7 @@ const About = () => {
 
     useEffect( () => {
         dispatch(detailActions.setLoading())
-        dispatch(fetchAboutData(params.page))
+        dispatch(fetchAboutData({currentPage: params.page, perPage: 5}))
         dispatch(detailActions.endLoading())
     }, [dispatch, params.page])
 

@@ -27,3 +27,12 @@ export const editComment = async (props) => {
         console.log(error)
     }
 }
+
+export const deleteComment = async (commentId) => {
+    try {
+        return await axios.delete(`${api}/comments/${commentId}`,{
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

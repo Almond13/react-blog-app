@@ -12,7 +12,6 @@ const AddComment = (props) => {
     const postId = useSelector(state => state.detail.postId)
     const commentId = props.commentId
     const selectedComment = commentData.find(item => item.id === commentId)
-    const type = useSelector(state => state.comment.typeIndex)
 
     const [name, setName] =useState('')
     const [email, setEmail] =useState('')
@@ -37,16 +36,7 @@ const AddComment = (props) => {
         ResetAll()
     }
 
-    const updateCommentData = () => {
-        if(storeEdit[commentId] && selectedComment !== undefined){
-            setContent(selectedComment.content.rendered.replace(/<\/?p>/g, ''))
-            setName(selectedComment.author_name)
-        } else {
-            setName('')
-            setEmail('')
-            setContent('')
-        }
-    }
+
 
     const title = () => {
         if(storeEdit[commentId]){
@@ -59,6 +49,16 @@ const AddComment = (props) => {
     }
 
     useEffect( ()=> {
+        const updateCommentData = () => {
+            if(storeEdit[commentId] && selectedComment !== undefined){
+                setContent(selectedComment.content.rendered.replace(/<\/?p>/g, ''))
+                setName(selectedComment.author_name)
+            } else {
+                setName('')
+                setEmail('')
+                setContent('')
+            }
+        }
         updateCommentData()
     },[storeEdit, commentId, selectedComment])
 

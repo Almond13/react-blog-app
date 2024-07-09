@@ -8,7 +8,11 @@ const initialState = {
     aboutHeader: {},
     detailData: [],
     postId : 0,
-    currentPage: 0
+    currentPage: 0,
+    prevPost: 0,
+    prevTitle: '',
+    nextPost: 0,
+    nextTitle: ''
 }
 
 const detailSlice = createSlice({
@@ -35,15 +39,27 @@ const detailSlice = createSlice({
             state.aboutData = initialState.aboutData
             state.aboutHeader = initialState.aboutData
         },
+        setDetailNavigation(state, action) {
+            if (Number(state.aboutHeader['x-wp-total']) === 0) return
+
+            const data = action.payload.data
+            if(state.postId !== 0 || undefined) {
+                const currentIndex = data.findIndex(item => item.id === state.postId)
+                state.prevPost = data[currentIndex <= 0 ? currentIndex : currentIndex - 1].id
+                state.prevTitle = currentIndex <= 0 ? null : data[currentIndex - 1].title.rendered
+                state.nextPost = data[currentIndex >= data.length - 1 ? currentIndex : currentIndex + 1].id
+                state.nextTitle = currentIndex >= data.length - 1 ? null : data[currentIndex + 1].title.rendered
+            }
+        }
     }
 })
 
 export const detailActions = detailSlice.actions
 
-export const fetchAboutData = (page) => async (dispatch) => {
+export const fetchAboutData = (props) => async (dispatch) => {
     try {
-        const response = await getPost(page)
-        dispatch(detailActions.getAboutData({ data: response.data, headers: { ...response.headers }, current: page }))
+        const response = await getPost({currentPage:props.currentPage, perPage: props.perPage})
+        dispatch(detailActions.getAboutData({ data: response.data, headers: { ...response.headers }, current: props.currentPage }))
     } catch (error) {
         console.log(error, '에러 발생')
     }
@@ -61,6 +77,15 @@ export const fetchDetailData = (id) => async (dispatch) => {
 export const resetDetail = () => async (dispatch) => {
     dispatch(detailActions.resetDetailData())
     dispatch(commentActions.resetCommentData())
+}
+
+export const detailNavigation = () => async (dispatch) => {
+    try{
+        const response = await getPost({currentPage: 1, perPage: 100})
+        dispatch(detailActions.setDetailNavigation({data: response.data}))
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export default detailSlice.reducer

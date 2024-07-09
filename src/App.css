@@ -2,6 +2,11 @@
     padding: 10px;
 }
 
+.App a {
+    text-decoration: none;
+    color: black;
+}
+
 .pagination > a{
     padding: 5px;
 }
