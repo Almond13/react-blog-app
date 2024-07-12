@@ -3,12 +3,13 @@ const api = process.env.REACT_APP_BLOG_API
 
 export const getPost = async (props) => {
     try {
-        return await axios.get(`${api}/posts`,{
-            params: {
-                per_page : props.perPage,
-                page : props.currentPage
-            }
-        })
+            return await axios.get(`${api}/posts`,{
+                params: {
+                    per_page : props.perPage || 5,
+                    page : props.currentPage || 1,
+                    categories: props.categories
+                }
+            })
     } catch (error) {
         console.log(error)
     }

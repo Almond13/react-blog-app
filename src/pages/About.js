@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import {Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
-import {detailActions, fetchAboutData} from "../redux/modules/detail"
+import {detailActions, fetchAboutData, resetDetail} from "../redux/modules/detail"
 
 const About = () => {
     const params = useParams()
@@ -14,19 +14,19 @@ const About = () => {
         dispatch(detailActions.setLoading())
         dispatch(fetchAboutData({currentPage: params.page, perPage: 5}))
         dispatch(detailActions.endLoading())
+        return () => {
+            dispatch(resetDetail())
+        }
     }, [dispatch, params.page])
 
     if (loading) {
         return <p>대기중</p>
     }
 
-    if (aboutData.length === 0) {
-        return null
-    }
-
     return (
         <>
-            <Outlet />
+            <h1>어바웃</h1>
+            <Outlet/>
         </>
     );
 };

@@ -37,7 +37,7 @@ const detailSlice = createSlice({
         resetDetailData(state) {
             state.detailData = initialState.detailData
             state.aboutData = initialState.aboutData
-            state.aboutHeader = initialState.aboutData
+            state.aboutHeader = initialState.aboutHeader
         },
         setDetailNavigation(state, action) {
             if (Number(state.aboutHeader['x-wp-total']) === 0) return
@@ -50,7 +50,7 @@ const detailSlice = createSlice({
                 state.nextPost = data[currentIndex >= data.length - 1 ? currentIndex : currentIndex + 1].id
                 state.nextTitle = currentIndex >= data.length - 1 ? null : data[currentIndex + 1].title.rendered
             }
-        }
+        },
     }
 })
 
@@ -58,8 +58,18 @@ export const detailActions = detailSlice.actions
 
 export const fetchAboutData = (props) => async (dispatch) => {
     try {
-        const response = await getPost({currentPage:props.currentPage, perPage: props.perPage})
-        dispatch(detailActions.getAboutData({ data: response.data, headers: { ...response.headers }, current: props.currentPage }))
+        const response = await getPost({
+            currentPage: props.currentPage,
+            perPage: props.perPage,
+            categories: props.category,
+        })
+        await dispatch(
+            detailActions.getAboutData({
+                data: response.data,
+                headers: { ...response.headers },
+                current: props.currentPage
+            })
+        )
     } catch (error) {
         console.log(error, '에러 발생')
     }

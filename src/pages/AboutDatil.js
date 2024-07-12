@@ -26,7 +26,7 @@ const Detail = () => {
         setLoading(false)
     },[dispatch, params.id, postId])
 
-
+    //TODO: https://ko.react.dev/reference/react/useEffect#my-effect-keeps-re-running-in-an-infinite-cycle 대칭 확인
     useEffect(() => {
         return () => {
             dispatch(resetDetail())
