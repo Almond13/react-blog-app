@@ -10,8 +10,8 @@ const Pagination = () => {
     }
     const { name, sub, page } = parsePath()
 
-    const linkPath = (pageNum) => {
-        return page !== undefined ? `/${name}/${sub}/${pageNum}` : `/${name}/${pageNum}`;
+    const linkPath = (pageNumber) => {
+        return page !== undefined ? `/${name}/${sub}/${pageNumber}` : `/${name}/${pageNumber}`;
     }
 
     const totalPage = Number(useSelector((state) => state.detail.aboutHeader['x-wp-totalpages']))

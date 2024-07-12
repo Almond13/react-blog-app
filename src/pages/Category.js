@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import {Link, Outlet, useLocation, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
 import {detailActions, fetchAboutData, resetDetail} from "../redux/modules/detail"
@@ -8,28 +8,24 @@ const Category = () => {
     const params = useParams()
     const location = useLocation()
     const dispatch = useDispatch()
-
     const loading = useSelector(state => state.detail.loading)
-    const storeCategory = useSelector(state => state.detail.category)
-
-    const pathCategory = () => {
-        if (location.pathname.includes('grouped')) {
-            return 1
-        } else if (location.pathname.includes('test')) {
-            return 2
-        }
-    }
 
     useEffect( () => {
+        const pathCategory = () => {
+            if (location.pathname.includes('grouped')) {
+                return 1
+            } else if (location.pathname.includes('test')) {
+                return 2
+            }
+        }
 
-        console.log(pathCategory())
         dispatch(detailActions.setLoading())
         dispatch(fetchAboutData({currentPage: params.page, perPage: 5, category: pathCategory()}))
         dispatch(detailActions.endLoading())
 
-        // // return () => {
-        // //     dispatch(resetDetail())
-        // // }
+        return () => {
+            dispatch(resetDetail())
+        }
     }, [dispatch, params.page, location.pathname])
 
     if (loading) {
