@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {Link, useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
-import {detailNavigation, fetchDetailData, resetDetail} from "../redux/modules/detail";
+import {getDetailNavigation, fetchDetailData, resetDetail} from "../redux/modules/detail";
 import CommentWrap from "../components/CommentWrap";
 import {fetchCommentData} from "../redux/modules/comment";
 
@@ -12,17 +12,14 @@ const Detail = () => {
 
     const detailData = useSelector(state => state.detail.detailData)
     const postId = params.id
-    const prevLink = useSelector(state => state.detail.prevPost)
-    const prevTitle = useSelector(state => state.detail.prevTitle)
-    const nextLink = useSelector(state => state.detail.nextPost)
-    const nextTitle = useSelector(state => state.detail.nextTitle)
+    const {prevPost, prevTitle, nextPost, nextTitle} = useSelector(state => state.detail.detailNavigation)
 
 
     useEffect(  ()=> {
         setLoading(true)
         dispatch(fetchDetailData(postId))
         dispatch(fetchCommentData(postId))
-        dispatch(detailNavigation())
+        dispatch(getDetailNavigation())
         setLoading(false)
     },[dispatch, params.id, postId])
 
@@ -52,8 +49,8 @@ const Detail = () => {
             <h1>{detailData.title.rendered}</h1>
             {detailDate()}
             <div dangerouslySetInnerHTML={{__html: detailData.content.rendered}}></div>
-            <Link to={`/about/post/${prevLink}`}>&lt;이전글: {prevTitle}</Link>
-            <Link to={`/about/post/${nextLink}`}> {nextTitle} :다음글 &gt;</Link>
+            <Link to={`/about/post/${prevPost}`}>&lt;이전글: {prevTitle}</Link>{' | '}
+            <Link to={`/about/post/${nextPost}`}> {nextTitle} :다음글 &gt;</Link>
             <CommentWrap/>
         </>
     )

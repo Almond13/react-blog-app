@@ -9,10 +9,12 @@ const initialState = {
     detailData: [],
     postId : 0,
     currentPage: 0,
-    prevPost: 0,
-    prevTitle: '',
-    nextPost: 0,
-    nextTitle: ''
+    detailNavigation: {
+        prevPost: 0,
+        prevTitle: '',
+        nextPost: 0,
+        nextTitle: ''
+    }
 }
 
 const detailSlice = createSlice({
@@ -40,6 +42,7 @@ const detailSlice = createSlice({
         },
         resetDetailData(state) {
             state.detailData = initialState.detailData
+            state.detailNavigation = initialState.detailNavigation
         },
         setDetailNavigation(state, action) {
             if (Number(state.aboutHeader['x-wp-total']) === 0) return
@@ -47,10 +50,10 @@ const detailSlice = createSlice({
             const data = action.payload.data
             if(state.postId !== 0 || undefined) {
                 const currentIndex = data.findIndex(item => item.id === state.postId)
-                state.prevPost = data[currentIndex <= 0 ? currentIndex : currentIndex - 1].id
-                state.prevTitle = currentIndex <= 0 ? null : data[currentIndex - 1].title.rendered
-                state.nextPost = data[currentIndex >= data.length - 1 ? currentIndex : currentIndex + 1].id
-                state.nextTitle = currentIndex >= data.length - 1 ? null : data[currentIndex + 1].title.rendered
+                state.detailNavigation.prevPost = data[currentIndex <= 0 ? currentIndex : currentIndex - 1].id
+                state.detailNavigation.prevTitle = currentIndex <= 0 ? null : data[currentIndex - 1].title.rendered
+                state.detailNavigation.nextPost = data[currentIndex >= data.length - 1 ? currentIndex : currentIndex + 1].id
+                state.detailNavigation.nextTitle = currentIndex >= data.length - 1 ? null : data[currentIndex + 1].title.rendered
             }
         },
     }
@@ -95,7 +98,7 @@ export const resetAbout = () => async (dispatch) => {
     dispatch(detailActions.resetAboutData())
 }
 
-export const detailNavigation = () => async (dispatch) => {
+export const getDetailNavigation = () => async (dispatch) => {
     try{
         const response = await getPost({currentPage: 1, perPage: 100})
         dispatch(detailActions.setDetailNavigation({data: response.data}))
