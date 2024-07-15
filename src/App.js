@@ -20,7 +20,7 @@ function App() {
               </Route>
           </Route>
           <Route path="/category" element={<Category/>}>
-              <Route path="grouped">
+              <Route path=":sub">
                   <Route path=":page?" element={<List/>}>
                   </Route>
                   <Route path="post/:id?" element={<Detail/>}>

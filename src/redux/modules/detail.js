@@ -34,10 +34,12 @@ const detailSlice = createSlice({
             state.detailData = action.payload.data
             state.postId = action.payload.data.id
         },
-        resetDetailData(state) {
-            state.detailData = initialState.detailData
+        resetAboutData(state) {
             state.aboutData = initialState.aboutData
             state.aboutHeader = initialState.aboutHeader
+        },
+        resetDetailData(state) {
+            state.detailData = initialState.detailData
         },
         setDetailNavigation(state, action) {
             if (Number(state.aboutHeader['x-wp-total']) === 0) return
@@ -87,6 +89,10 @@ export const fetchDetailData = (id) => async (dispatch) => {
 export const resetDetail = () => async (dispatch) => {
     dispatch(detailActions.resetDetailData())
     dispatch(commentActions.resetCommentData())
+}
+
+export const resetAbout = () => async (dispatch) => {
+    dispatch(detailActions.resetAboutData())
 }
 
 export const detailNavigation = () => async (dispatch) => {
