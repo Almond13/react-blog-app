@@ -98,10 +98,15 @@ export const resetAbout = () => async (dispatch) => {
     dispatch(detailActions.resetAboutData())
 }
 
-export const getDetailNavigation = () => async (dispatch) => {
+export const getDetailNavigation = (pathname, postId) => async (dispatch) => {
     try{
-        const response = await getPost({currentPage: 1, perPage: 100})
-        dispatch(detailActions.setDetailNavigation({data: response.data}))
+        const response = await getPost({
+            currentPage: 1,
+            perPage: 100,
+        })
+        const currentCategory = response.data.find(item => item.id === Number(postId)).categories[0]
+        const categoryData = pathname === 'category' ? response.data.filter(item => item.categories[0] === currentCategory) : response.data
+        dispatch(detailActions.setDetailNavigation({data: categoryData}))
     } catch (error) {
         console.log(error)
     }
