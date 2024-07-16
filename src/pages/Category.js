@@ -11,7 +11,7 @@ const Category = () => {
 
     useEffect( () => {
         const pathCategory = () => {
-            if (params.sub === 'grouped') {
+            if (params.sub === 'unclassified') {
                 return 1
             } else if (params.sub === 'test') {
                 return 15
@@ -34,7 +34,7 @@ const Category = () => {
     return (
         <>
             <h1>카테고리</h1>
-            <Link to="/category/grouped/1" onClick={() => getPost({categories: 1})}>미분류</Link>{' '}
+            <Link to="/category/unclassified/1" onClick={() => getPost({categories: 1})}>미분류</Link>{' '}
             <Link to="/category/test/1" onClick={() => getPost({categories: 15})}>test</Link>
             <Outlet/>
         </>

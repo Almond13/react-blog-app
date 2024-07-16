@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, {useEffect, useRef, useState} from "react"
 import {Link, useLocation, useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {getDetailNavigation, fetchDetailData, resetDetail} from "../redux/modules/detail";
@@ -23,16 +23,10 @@ const Detail = () => {
         dispatch(fetchCommentData(postId))
         dispatch(getDetailNavigation(parsed.name, postId))
         setLoading(false)
-
-        console.log()
-    },[dispatch, parsed.name, postId])
-
-    //TODO: https://ko.react.dev/reference/react/useEffect#my-effect-keeps-re-running-in-an-infinite-cycle 대칭 확인
-    useEffect(() => {
         return () => {
             dispatch(resetDetail())
         }
-    }, [dispatch])
+    },[dispatch, parsed.name, postId])
 
     const detailDate = () => {
         const dateObj = new Date(detailData.date)
