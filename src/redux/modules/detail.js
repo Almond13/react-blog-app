@@ -62,11 +62,21 @@ const detailSlice = createSlice({
 export const detailActions = detailSlice.actions
 
 export const fetchAboutData = (props) => async (dispatch) => {
+    const pathCategory = () => {
+        if (props.category === 'unclassified') {
+            return 1
+        } else if (props.category === 'test') {
+            return 15
+        }else {
+            return null
+        }
+    }
     try {
+        await dispatch(detailActions.setLoading())
         const response = await getPost({
             currentPage: props.currentPage,
             perPage: props.perPage,
-            categories: props.category,
+            categories: pathCategory(),
         })
         await dispatch(
             detailActions.getAboutData({
@@ -75,6 +85,7 @@ export const fetchAboutData = (props) => async (dispatch) => {
                 current: props.currentPage
             })
         )
+        await dispatch(detailActions.endLoading())
     } catch (error) {
         console.log(error, '에러 발생')
     }

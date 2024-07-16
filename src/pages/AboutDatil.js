@@ -5,17 +5,20 @@ import {getDetailNavigation, fetchDetailData, resetDetail} from "../redux/module
 import CommentWrap from "../components/CommentWrap";
 import {fetchCommentData} from "../redux/modules/comment";
 import {detailLinkPath, parsePath} from "../api/getLocation";
+import {setDetailDate} from "../api/dateFormat";
 
 const Detail = () => {
     const params = useParams()
-    const dispatch = useDispatch()
-    const [loading, setLoading] = useState(false)
     const location = useLocation()
+    const dispatch = useDispatch()
+
+    const [loading, setLoading] = useState(false)
+    const postId = params.id
     const parsed = parsePath(location.pathname.split('/'))
 
-    const detailData = useSelector(state => state.detail.detailData)
-    const postId = params.id
     const {prevPost, prevTitle, nextPost, nextTitle} = useSelector(state => state.detail.detailNavigation)
+    const detailData = useSelector(state => state.detail.detailData)
+    const detailDate = setDetailDate(detailData.date)
 
     useEffect(  ()=> {
         setLoading(true)
@@ -23,16 +26,11 @@ const Detail = () => {
         dispatch(fetchCommentData(postId))
         dispatch(getDetailNavigation(parsed.name, postId))
         setLoading(false)
+
         return () => {
             dispatch(resetDetail())
         }
     },[dispatch, parsed.name, postId])
-
-    const detailDate = () => {
-        const dateObj = new Date(detailData.date)
-        const options = {year: 'numeric', month: 'long', day: '2-digit'}
-        return dateObj.toLocaleDateString('en-US', options)
-    }
 
     if (loading) {
         return <p>대기중</p>
@@ -45,7 +43,7 @@ const Detail = () => {
     return (
         <>
             <h1>{detailData.title.rendered}</h1>
-            {detailDate()}
+            {detailDate}
             <div dangerouslySetInnerHTML={{__html: detailData.content.rendered}}></div>
             <Link to={detailLinkPath(parsed, prevPost)}>&lt;이전글: {prevTitle}</Link>{' | '}
             <Link to={detailLinkPath(parsed, nextPost)}> {nextTitle} :다음글 &gt;</Link>

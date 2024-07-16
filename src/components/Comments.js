@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {eachCommentData, showEditBox, showReplyBox} from "../redux/modules/comment";
 import AddComment from "./AddComment";
 import {deleteComment} from "../api/postApi";
+import {setCommentDate} from "../api/dateFormat";
 
 const CommentList = (props) => {
     const dispatch = useDispatch()
@@ -19,11 +20,6 @@ const CommentList = (props) => {
         })
     },[commentData, storeEdit, storeReply, dispatch])
 
-    const commentDate = (date) => {
-        const [yy, mm, dd] = [date.slice(0,4),date.slice(5,7),date.slice(8,10)]
-        return `${yy}년 ${mm}월 ${dd}일`
-    }
-
     const showEdit = (id) => {
         dispatch(showEditBox(id))
     }
@@ -38,7 +34,7 @@ const CommentList = (props) => {
                 .filter(v=> v.parent === props.parent)
                 .map((item) => (
                 <div key={item.id} style={{margin: '10px', border: '1px solid gray'}}>
-                    {item.id} {item.author_name} {commentDate(item.date)} 부모: {item.parent}
+                    {item.id} {item.author_name} {setCommentDate(item.date)} 부모: {item.parent}
                     <div dangerouslySetInnerHTML={{__html: item.content.rendered}}></div>
                     {!storeReply[item.id] ?
                         <button onClick={() => showEdit(item.id)}>{storeEdit[item.id] ? '취소' : '수정'}</button>

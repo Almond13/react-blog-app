@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import {Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
-import {detailActions, fetchAboutData, resetAbout} from "../redux/modules/detail"
+import {fetchAboutData, resetAbout} from "../redux/modules/detail"
 
 const About = () => {
     const params = useParams()
@@ -10,9 +10,8 @@ const About = () => {
     const loading = useSelector(state => state.detail.loading)
 
     useEffect( () => {
-        dispatch(detailActions.setLoading())
         dispatch(fetchAboutData({currentPage: params.page, perPage: 5}))
-        dispatch(detailActions.endLoading())
+
         return () => {
             dispatch(resetAbout())
         }
