@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Link, useLocation, useParams} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {getDetailNavigation, fetchDetailData, resetDetail} from "../redux/modules/detail";
